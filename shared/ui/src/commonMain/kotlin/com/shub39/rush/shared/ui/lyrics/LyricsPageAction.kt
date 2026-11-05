@@ -23,6 +23,8 @@ import com.shub39.rush.shared.core.enums.Sources
 import com.shub39.rush.shared.core.interfaces.CorrectionSearchResult
 
 sealed interface LyricsPageAction {
+    data class OnAutoScrollSpeedChange(val speed: Float) : LyricsPageAction
+
     data class OnExpressiveLyricsChange(val pref: Boolean) : LyricsPageAction
 
     data class OnBlurSyncedChange(val pref: Boolean) : LyricsPageAction
