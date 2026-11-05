@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+import com.android.build.api.variant.ResValue
 import java.util.Properties
 
 plugins {
@@ -136,6 +137,16 @@ android {
                 )
             )
         }
+    }
+}
+
+// Fork only: tells this build apart from a regular debug build on the launcher.
+androidComponents {
+    onVariants(selector().withFlavor("version" to "foss").withBuildType("debug")) { variant ->
+        variant.resValues.put(
+            variant.makeResValueKey("string", "app_name"),
+            ResValue("$appName Stage"),
+        )
     }
 }
 

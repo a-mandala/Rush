@@ -1,3 +1,16 @@
+# Rush Stage
+
+This is a personal fork of [shub39/Rush](https://github.com/shub39/Rush). The `stage` branch combines
+two plain lyrics features, and its foss debug build is named "Rush Stage":
+
+- **Fit to screen**: a toggle that shows lyrics at the largest font size that fits the page. Below
+  14sp they scroll instead.
+- **Auto-scroll**: play/pause and speed controls that follow the player when the lyrics match the
+  playing song, and pause on touch. They are hidden when fitted lyrics need no scrolling.
+
+Both are proposed upstream as separate branches, `feat/fit-to-screen` and
+`feat/plain-lyrics-autoscroll`. The `stage` branch itself is fork-only and is not proposed upstream.
+
 ![](fastlane/metadata/android/en-US/images/featureGraphic.png)
 
 [<img alt="Get it on Google Play" src="badges/playstore.png" width="180px">](https://play.google.com/store/apps/details?id=com.shub39.rush.play)
