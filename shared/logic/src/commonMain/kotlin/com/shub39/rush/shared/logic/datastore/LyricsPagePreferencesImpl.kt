@@ -54,7 +54,12 @@ class LyricsPagePreferencesImpl(private val dataStore: DataStore<Preferences>) :
         private val blurSynced = booleanPreferencesKey("blur_synced")
         private val expressiveSyllables = booleanPreferencesKey("expressive_syllables")
         private val romanizationEnabled = booleanPreferencesKey("romanization_enabled")
+        private val autoScrollSpeed = floatPreferencesKey("plain_lyrics_auto_scroll_speed")
         private val hideUI = booleanPreferencesKey("hide_ui")
+    }
+
+    override suspend fun updateAutoScrollSpeed(speed: Float) {
+        dataStore.edit { it[autoScrollSpeed] = speed }
     }
 
     override suspend fun reset() {
@@ -87,6 +92,7 @@ class LyricsPagePreferencesImpl(private val dataStore: DataStore<Preferences>) :
                     fullscreen = prefs[fullscreen] == true,
                     romanizationEnabled = prefs[romanizationEnabled] ?: false,
                     hideUI = prefs[hideUI] ?: false,
+                    autoScrollSpeed = prefs[autoScrollSpeed] ?: 1f,
                 )
             }
 
