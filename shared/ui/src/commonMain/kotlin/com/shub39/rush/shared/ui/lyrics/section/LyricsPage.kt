@@ -58,6 +58,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -148,6 +149,8 @@ fun LyricsPageContent(
     onOpenSearchSheet: () -> Unit,
 ) =
     PageFill(modifier = modifier) {
+        val latestPlayback = rememberUpdatedState(playbackInfo)
+        val playbackProvider = remember { { latestPlayback.value } }
         val lazyListState = rememberLazyListState()
 
         val (cardBackground, cardContent) = getCardColors(state)
@@ -229,6 +232,7 @@ fun LyricsPageContent(
             ) {
                 AnimatedContent(
                     targetState = state.lyricsState,
+                    contentKey = { if (it is LyricsState.Loaded) it.song.id else it::class },
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center,
                 ) { lyricsState ->
@@ -377,7 +381,9 @@ fun LyricsPageContent(
                                                 lazyListState = lazyListState,
                                                 cardContent = cardContent,
                                                 action = action,
-                                                modifier = Modifier.weight(1f).fadeTopToBottom(),
+                                                modifier = Modifier.weight(1f),
+                                                playbackInfo = playbackProvider,
+                                                controlsAlpha = controlsAlpha,
                                                 onOpenSearchSheet = onOpenSearchSheet,
                                             )
                                         } else if (lyricsState.song.ttmlLyrics != null) {
@@ -474,10 +480,9 @@ fun LyricsPageContent(
                                                     cardContent = cardContent,
                                                     action = action,
                                                     onOpenSearchSheet = onOpenSearchSheet,
-                                                    modifier =
-                                                        Modifier.weight(1f)
-                                                            .fillMaxHeight()
-                                                            .fadeTopToBottom(),
+                                                    playbackInfo = playbackProvider,
+                                                    controlsAlpha = controlsAlpha,
+                                                    modifier = Modifier.weight(1f).fillMaxHeight(),
                                                 )
                                             } else if (lyricsState.song.ttmlLyrics != null) {
                                                 SyllableSyncedLyrics(

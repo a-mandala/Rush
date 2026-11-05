@@ -33,6 +33,7 @@ import com.shub39.rush.shared.ui.lyrics.LyricsPageState
 import com.shub39.rush.shared.ui.lyrics.LyricsState
 import com.shub39.rush.shared.ui.lyrics.PlaybackInfo
 import com.shub39.rush.shared.ui.lyrics.RomanizedLyrics
+import com.shub39.rush.shared.ui.lyrics.normalizeAutoScrollSpeed
 import com.shub39.rush.shared.ui.lyrics.withRomanization
 import com.shub39.rush.shared.ui.rushmode.RushAction
 import com.shub39.rush.shared.ui.rushmode.RushController
@@ -96,6 +97,11 @@ class LyricsVM(
 
     fun onAction(action: LyricsPageAction) {
         when (action) {
+            is LyricsPageAction.OnAutoScrollSpeedChange ->
+                viewModelScope.launch {
+                    lyricsPrefs.updateAutoScrollSpeed(normalizeAutoScrollSpeed(action.speed))
+                }
+
             is LyricsPageAction.OnCorrectionSearch -> searchCorrections(action.track, action.artist)
 
             LyricsPageAction.OnToggleRushMode -> rushController.onAction(RushAction.Toggle)
