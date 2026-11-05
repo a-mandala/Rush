@@ -20,6 +20,17 @@ import com.shub39.rush.shared.core.dataclasses.SearchResult
 import com.shub39.rush.shared.core.dataclasses.SongMeta
 import com.shub39.rush.shared.core.matching.SongMatcher
 
+/**
+ * Whether plain lyrics offer auto-scroll: not without lyrics, and not when fit to screen shows all
+ * of them, as there is nothing to scroll then. Fitted lyrics that overflow at the minimum size
+ * scroll like any others.
+ */
+fun plainLyricsAutoScrollAvailable(
+    hasLyrics: Boolean,
+    fitToScreen: Boolean,
+    fitsEntirely: Boolean,
+): Boolean = hasLyrics && !(fitToScreen && fitsEntirely)
+
 fun normalizeAutoScrollSpeed(speed: Float): Float =
     if (speed.isFinite()) speed.coerceIn(0.5f, 2f) else 1f
 

@@ -169,6 +169,9 @@ class LyricsVM(
             is LyricsPageAction.OnHideUIToggle ->
                 viewModelScope.launch { lyricsPrefs.updateHideUI(action.enabled) }
 
+            is LyricsPageAction.OnFitToScreenToggle ->
+                viewModelScope.launch { lyricsPrefs.updateFitToScreen(action.enabled) }
+
             is LyricsPageAction.OnBlurSyncedChange ->
                 viewModelScope.launch { lyricsPrefs.updateBlurSynced(action.pref) }
 

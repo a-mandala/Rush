@@ -42,4 +42,5 @@ data class LyricsPrefs(
     val romanizationEnabled: Boolean = false,
     val hideUI: Boolean = false,
     val autoScrollSpeed: Float = 1f,
+    val fitToScreen: Boolean = false,
 )
