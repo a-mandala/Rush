@@ -142,11 +142,13 @@ android {
 
 // Fork only: tells this build apart from a regular debug build on the launcher.
 androidComponents {
-    onVariants(selector().withFlavor("version" to "foss").withBuildType("debug")) { variant ->
-        variant.resValues.put(
-            variant.makeResValueKey("string", "app_name"),
-            ResValue("$appName Stage"),
-        )
+    onVariants(selector().withFlavor("version" to "foss")) { variant ->
+        if (variant.buildType == "debug" || variant.buildType == "beta") {
+            variant.resValues.put(
+                variant.makeResValueKey("string", "app_name"),
+                ResValue("$appName Stage"),
+            )
+        }
     }
 }
 
