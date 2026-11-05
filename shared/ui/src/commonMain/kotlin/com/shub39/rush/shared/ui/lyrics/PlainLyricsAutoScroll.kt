@@ -32,7 +32,7 @@ fun plainLyricsAutoScrollAvailable(
 ): Boolean = hasLyrics && !(fitToScreen && fitsEntirely)
 
 fun normalizeAutoScrollSpeed(speed: Float): Float =
-    if (speed.isFinite()) speed.coerceIn(0.5f, 2f) else 1f
+    if (speed.isFinite()) speed.coerceIn(0.25f, 4f) else 1f
 
 /** A fixed pixel velocity avoids pulses at boundaries between differently sized lyrics. */
 fun plainLyricsVelocity(
@@ -40,8 +40,10 @@ fun plainLyricsVelocity(
     durationMillis: Long?,
     positionMillis: Long,
     speed: Float,
+    lineCount: Int,
 ): Float {
-    val duration = durationMillis?.takeIf { it > 0 } ?: 180_000L
+    val duration =
+        durationMillis?.takeIf { it > 0 } ?: (lineCount.coerceAtLeast(1).toLong() * 3000L)
     val position =
         if (durationMillis != null && durationMillis > 0 && positionMillis in 0 until duration)
             positionMillis
@@ -76,17 +78,19 @@ class PlainLyricsScrollRun {
     private var velocity = 0f
     private var hasVelocity = false
     private var duration: Long? = null
+    private var lineCount = 1
     private var previousPosition = 0L
     private var previousSpeed = 0f
 
-    fun start(distance: Float, durationMillis: Long?, startingPosition: Long) {
+    fun start(distance: Float, durationMillis: Long?, startingPosition: Long, lineCount: Int) {
+        this.lineCount = lineCount
         remaining = distance.coerceAtLeast(0f)
         running = remaining > 0f
         duration = durationMillis
         previousPosition = startingPosition
         // Unknown-duration restarts retain the original pace across pauses and remeasurement.
         if (!hasVelocity || durationMillis != null && durationMillis > 0) {
-            velocity = plainLyricsVelocity(remaining, duration, startingPosition, 1f)
+            velocity = plainLyricsVelocity(remaining, duration, startingPosition, 1f, lineCount)
             hasVelocity = remaining > 0f
         }
         previousSpeed = 0f
@@ -106,7 +110,7 @@ class PlainLyricsScrollRun {
         ) {
             duration = durationMillis
             if (durationMillis != null && durationMillis > 0) {
-                velocity = plainLyricsVelocity(remaining, duration, position, 1f)
+                velocity = plainLyricsVelocity(remaining, duration, position, 1f, lineCount)
             }
         }
         previousPosition = position

@@ -284,6 +284,7 @@ fun PlainLyrics(
                     remaining,
                     currentDuration,
                     if (followsPlayer) currentPlayback().position else 0L,
+                    nonEmptyItems.size,
                 )
                 lazyListState.scroll {
                     var previousFrame = withFrameNanos { it }

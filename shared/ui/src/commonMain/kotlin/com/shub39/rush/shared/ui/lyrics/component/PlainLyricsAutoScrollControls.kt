@@ -61,8 +61,8 @@ fun PlainLyricsAutoScrollControls(
         Slider(
             value = speed,
             onValueChange = onSpeedChange,
-            valueRange = 0.5f..2f,
-            steps = 5,
+            valueRange = 0.25f..4f,
+            steps = 14,
             modifier = Modifier.weight(1f).semantics { contentDescription = speedLabel },
         )
         Text(
