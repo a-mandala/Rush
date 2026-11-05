@@ -23,6 +23,8 @@ import com.shub39.rush.shared.core.enums.LyricsBackground
 import kotlinx.coroutines.flow.Flow
 
 interface LyricsPagePreferences {
+    suspend fun updateAutoScrollSpeed(speed: Float)
+
     suspend fun reset()
 
     /**

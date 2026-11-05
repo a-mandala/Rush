@@ -120,4 +120,7 @@
     <string name="no_thanks">No thanks</string>
     <string name="notification_access_needed">Notification Access Needed</string>
     <string name="notification_access_needed_info">Notification access is required for Rush Mode to automatically change songs and for Synced Lyrics.</string>
+    <string name="auto_scroll_speed">Auto-scroll speed</string>
+    <string name="pause_auto_scroll">Pause lyrics auto-scroll</string>
+    <string name="start_auto_scroll">Start lyrics auto-scroll</string>
 </resources>
